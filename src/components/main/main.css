@@ -1,0 +1,13 @@
+.newest_container {
+  background-image: linear-gradient(
+    270deg,
+    rgb(233, 236, 239) 0%,
+    rgb(244, 245, 247) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.newst_image img {
+  opacity: 0.1;
+}

@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary-900: 74, 109, 255;
+  --color-primary-800: 92, 124, 255;
+  --color-primary-700: 110, 138, 255;
+  --color-primary-600: 128, 153, 255;
+  --color-primary-500: 146, 167, 255;
+  --color-primary-400: 164, 182, 255;
+  --color-primary-300: 183, 197, 255;
+  --color-primary-200: 201, 211, 255;
+  --color-primary-100: 219, 226, 255;
+  --color-primary-50: 228, 233, 255;
+  --color-secondary-900: 42, 45, 83;
+  --color-secondary-800: 63, 66, 100;
+  --color-secondary-700: 85, 87, 117;
+  --color-secondary-600: 106, 108, 135;
+  --color-secondary-500: 127, 129, 152;
+  --color-secondary-400: 148, 150, 169;
+  --color-secondary-300: 170, 171, 186;
+  --color-secondary-200: 191, 192, 203;
+  --color-secondary-100: 212, 213, 221;
+  --color-secondary-50: 223, 223, 229;
+  --color-fill: 67, 56, 202;
+  --color-title: 63, 66, 100;
+  --color-text-base: 106, 108, 135;
+  --color-text-muted: 148, 150, 169;
+  --color-text-inverted: 255, 255, 255;
+  --color-button-primary: 74, 109, 255;
+  --color-button-primary-hover: 110, 138, 255;
+  --color-button-muted: 223, 223, 229;
+  --color-icon-primary: 74, 109, 255;
+  --color-icon-secondary-dkst: 42, 45, 83;
+  --color-icon-secondary-dk: 85, 87, 117;
+  --color-icon-secondary-lt: 127, 129, 152;
+  --color-success: 0, 192, 115;
+  --color-warning: 255, 153, 0;
+  --color-error: 255, 71, 87;
+  --color-red-500: 239, 68, 68;
+  --color-red-300: 252, 165, 165;
+  --scroll-primary: #efefef;
+  --scroll-secondary: #ccc;
+}
+
+.text-secondary-700 {
+  --tw-text-opacity: 1;
+  color: rgba(var(--color-secondary-700), var(--tw-text-opacity));
+}
+.text-secondary-800 {
+  --tw-text-opacity: 1;
+  color: rgba(var(--color-secondary-800), var(--tw-text-opacity));
+}
+.text-primary-900 {
+  --tw-text-opacity: 1;
+  color: rgba(var(--color-primary-900), var(--tw-text-opacity));
+}
+
+.fill-primary-900 {
+  fill: rgb(var(--color-primary-900));
+}
+.bg-success {
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--color-success), var(--tw-bg-opacity));
+}
+.text-skin-base {
+  --tw-text-opacity: 1;
+  color: rgba(var(--color-text-base), var(--tw-text-opacity));
+}
+
+body {
+  font-family: Vazirmatn;
+}
+
+@media (min-width: 768px) {
+  .md\:text-skin-base {
+    --tw-text-opacity: 1;
+    color: rgba(var(--color-text-base), var(--tw-text-opacity));
+  }
+}
+
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d3d3d3;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}

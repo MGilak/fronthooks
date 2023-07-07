@@ -1,0 +1,18 @@
+.latest_courses .swiper-button-next,
+.latest_courses .swiper-button-prev {
+  display: none !important;
+}
+.latest_courses .swiper-slide {
+  overflow: visible;
+  margin-left: 40px !important;
+  width: 305px !important;
+  flex-shrink: 0 !important;
+}
+.latest_courses .image_course {
+  aspect-ratio: 13 / 9;
+}
+.swiper-wrapper {
+  display: flex !important;
+  gap: 20px !important;
+}
+

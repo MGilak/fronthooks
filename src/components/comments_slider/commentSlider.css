@@ -1,0 +1,13 @@
+.commentSlider .swiper-wrapper {
+  display: flex !important;
+  gap: 0 !important;
+}
+.commentSlider .swiper-slide {
+  flex-shrink: 0 !important;
+}
+.swiper-3d .swiper-slide-shadow {
+  background: rgba(0, 0, 0, 0) !important;
+}
+.chlg_slider .swiper-slide {
+  margin-left: -37px !important;
+}
