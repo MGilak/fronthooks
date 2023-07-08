@@ -806,8 +806,6 @@ const Main = () => {
           </div>
         </div>
       </section>
-
-      <div className="h-[1000px] w-16 bg-white-500"></div>
     </div>
   );
 };
