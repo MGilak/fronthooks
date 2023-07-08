@@ -84,8 +84,10 @@ body {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
+
 ::-webkit-scrollbar {
   width: 9px;
+  height: 3px;
 }
 ::-webkit-scrollbar-thumb {
   background-color: #d3d3d3;
