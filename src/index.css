@@ -97,3 +97,9 @@ body {
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
+@media only screen and (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+}

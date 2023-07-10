@@ -8,11 +8,10 @@
   width: 305px !important;
   flex-shrink: 0 !important;
 }
-.latest_courses .image_course {
-  aspect-ratio: 13 / 9;
+.image_course {
+  aspect-ratio: 13 / 9 !important;
 }
 .swiper-wrapper {
   display: flex !important;
   gap: 20px !important;
 }
-

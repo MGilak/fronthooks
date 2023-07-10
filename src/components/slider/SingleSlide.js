@@ -1,7 +1,8 @@
 import React from "react";
 import { replace, toFarsiNumber } from "../../data";
+import "./slider.css";
 
-const SingleSlide = ({ course }) => {
+const SingleSlide = ({ course, changeStyle }) => {
   // محاسبه قیمت نهایی و تبدیل به فارسی
   const { discount, price } = course;
   const finalPrice = price - price * (discount / 100);
@@ -12,7 +13,7 @@ const SingleSlide = ({ course }) => {
 
   return (
     <div className="mt-12 h-full">
-      <div className="bg-white px-3 pb-5 md:pb-0 rounded-xl h-[88%]">
+      <div className="bg-white px-3 md:pb-0 rounded-xl h-[88%]">
         {/* header */}
         <div className="top-[-47px] relative rounded-xl shadow-[0_19px_30px_-19px_rgba(0,0,0,0.3)]">
           <a href="##">
@@ -147,7 +148,11 @@ const SingleSlide = ({ course }) => {
         <div className="h-[2px] w-full bg-gray-100 mb-6"></div>
 
         {/* footer */}
-        <div className="flex justify-between w-full">
+        <div
+          className={`flex justify-between w-full ${
+            changeStyle === "courses" && "sm:pb-4 pb-12"
+          }`}
+        >
           <div>
             <button className="rounded-2xl py-3 px-6 bg-blue-600 hover:bg-blue-500 transition-all duration-200 ease-in text-white">
               ثبت‌نام دوره
