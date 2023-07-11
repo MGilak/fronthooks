@@ -400,7 +400,7 @@ const Header = () => {
                   </li>
 
                   <li className=" gap-2 px-4 py-1 hover:bg-gray-100 transition duration-200 ease-in  mb-1 rounded-lg font-bold text-sm">
-                    <a href="##">
+                    <Link to="/profile">
                       <div className="flex items-center py-2 transition duration-200 ease-in hover:text-[#4a6dff]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -418,11 +418,11 @@ const Header = () => {
                           حساب کاربری
                         </span>
                       </div>
-                    </a>
+                    </Link>
                   </li>
 
                   <li className=" gap-2 px-4 py-1 hover:bg-gray-100 transition duration-200 ease-in  mb-1 rounded-lg font-bold text-sm">
-                    <a href="##">
+                    <Link to="/profile/courses">
                       <div className="flex items-center py-2 transition duration-200 ease-in hover:text-[#4a6dff]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -442,11 +442,11 @@ const Header = () => {
                           دوره‌های من
                         </span>
                       </div>
-                    </a>
+                    </Link>
                   </li>
 
                   <li className=" gap-2 px-4 py-1 hover:bg-gray-100  transition duration-200 ease-in mb-1 rounded-lg font-bold text-sm">
-                    <a href="##">
+                    <Link to="/profile/payments">
                       <div className="flex items-center py-2 transition duration-200 ease-in hover:text-[#4a6dff]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -470,7 +470,7 @@ const Header = () => {
                           سفارش‌های من
                         </span>
                       </div>
-                    </a>
+                    </Link>
                   </li>
 
                   <li className=" gap-2 px-4 py-1 hover:bg-gray-100  transition duration-200 ease-in mb-1 rounded-lg font-bold text-sm">
