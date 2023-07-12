@@ -1,6 +1,7 @@
 import React from "react";
 import { replace, toFarsiNumber } from "../../data";
 import "./slider.css";
+import { Link } from "react-router-dom";
 
 const SingleSlide = ({ course, changeStyle }) => {
   // محاسبه قیمت نهایی و تبدیل به فارسی
@@ -74,12 +75,12 @@ const SingleSlide = ({ course, changeStyle }) => {
         {/* content */}
         <div className="-mt-5">
           <div className="mb-3">
-            <a
+            <Link
               className="text-secondary-800 font-extrabold hover:text-blue-500 transition-all duration-200 ease-in"
-              href="##"
+              to="/courses/nextjs"
             >
               {course.name}
-            </a>
+            </Link>
           </div>
 
           <div className="flex mb-3 gap-6">

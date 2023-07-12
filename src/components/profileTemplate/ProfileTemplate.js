@@ -193,7 +193,7 @@ const ProfileTemplate = ({ children }) => {
           </div>
         </aside>
 
-        <div className="xl:col-span-10 lg:col-span-9 col-span-12 flex flex-col">
+        <div className="xl:col-span-10 lg:col-span-9 col-span-12 flex flex-col h-screen">
           <header className="bg-white">
             <div className="flex items-center justify-between py-5 px-4 lg:px-8">
               <div className="flex items-center gap-x-3">
