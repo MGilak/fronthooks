@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { replace, toFarsiNumber } from "../../data";
 import "./slider.css";
 import { Link } from "react-router-dom";
+import { useCart, useCartActions } from "./../../context/CartProvider";
+import { useNavigate } from "react-router-dom";
 
 const SingleSlide = ({ course, changeStyle }) => {
+  const [bottonText, setBottonText] = useState("ثبت‌نام");
+
+  const dispatch = useCartActions();
+  const { cart } = useCart();
+  const navigate = useNavigate();
+
+  const index = cart.find((item) => item.id === course.id);
+
+  useEffect(() => {
+    if (index) {
+      setBottonText("ادامه سفارش");
+    }
+  }, []);
+
+  const addToCart = () => {
+    setBottonText("ادامه سفارش");
+
+    if (bottonText !== "ادامه سفارش") {
+      dispatch({ type: "ADD", payload: course });
+    }
+
+    if (bottonText === "ادامه سفارش") {
+      navigate("/cart");
+    }
+  };
+
   // محاسبه قیمت نهایی و تبدیل به فارسی
   const { discount, price } = course;
   const finalPrice = price - price * (discount / 100);
@@ -17,7 +45,7 @@ const SingleSlide = ({ course, changeStyle }) => {
       <div className="bg-white px-3 md:pb-0 rounded-xl h-[88%]">
         {/* header */}
         <div className="top-[-47px] relative rounded-xl shadow-[0_19px_30px_-19px_rgba(0,0,0,0.3)]">
-          <a href="##">
+          <Link to={`/courses/${course.id}`}>
             <div className="w-full relative ">
               <img
                 className="image_course rounded-xl object-cover object-center h-full w-full "
@@ -25,7 +53,7 @@ const SingleSlide = ({ course, changeStyle }) => {
                 alt={course.name}
               />
             </div>
-          </a>
+          </Link>
           <div className="absolute top-1 flex justify-between w-full p-2">
             <div className="like transition-all duration-100 ease-in cursor-pointer py-2 px-2 rounded-lg flex gap-1 justify-center items-center hover:bg-red-500 hover:text-white bg-white text-red-500 text-[11px]">
               <svg
@@ -76,8 +104,8 @@ const SingleSlide = ({ course, changeStyle }) => {
         <div className="-mt-5">
           <div className="mb-3">
             <Link
+              to={`/courses/${course.id}`}
               className="text-secondary-800 font-extrabold hover:text-blue-500 transition-all duration-200 ease-in"
-              to="/courses/nextjs"
             >
               {course.name}
             </Link>
@@ -124,9 +152,7 @@ const SingleSlide = ({ course, changeStyle }) => {
           </div>
 
           <div className="text-blue-500 mb-7 hover:text-blue-900 font-bold text-sm flex items-center gap-3 transition-all duration-200 ease-in">
-            <a className="" href="##">
-              مشاهده اطلاعات دوره
-            </a>
+            <Link to={`/courses/${course.id}`}>مشاهده اطلاعات دوره</Link>
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -155,8 +181,11 @@ const SingleSlide = ({ course, changeStyle }) => {
           }`}
         >
           <div>
-            <button className="rounded-2xl py-3 px-6 bg-blue-600 hover:bg-blue-500 transition-all duration-200 ease-in text-white">
-              ثبت‌نام دوره
+            <button
+              onClick={addToCart}
+              className="rounded-2xl py-3 px-6 bg-blue-600 hover:bg-blue-500 transition-all duration-200 ease-in text-white"
+            >
+              {bottonText}
             </button>
           </div>
 

@@ -17,7 +17,7 @@ const Courses = () => {
   const [mdFilter, setMdFilter] = useState(false);
   const [mdSort, setMdSort] = useState(false);
 
-  // close filer menu in "md" break point
+  // close filter menu in "md" break point
   const mdFilterRef = useRef();
   const mdSortRef = useRef();
   useEffect(() => {

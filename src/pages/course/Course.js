@@ -2,8 +2,10 @@ import React, { useState, useRef } from "react";
 import Header from "./../../components/header/Header";
 import Footer from "./../../components/footer/Footer";
 import { BsHeart } from "react-icons/bs";
-import { FaStar, FaEye, FaEyeSlash, FaAngleDown } from "react-icons/fa";
+import { FaStar, FaEye, FaEyeSlash } from "react-icons/fa";
 import Session from "./../../components/sessions/Session";
+import { useParams } from "react-router-dom";
+import { newest } from "./../../data";
 
 const Course = () => {
   const [openDetails, setOpenDetails] = useState(false);
@@ -11,6 +13,10 @@ const Course = () => {
 
   const toUpDetailRef = useRef();
   const toUpSessionRef = useRef();
+
+  const { id } = useParams();
+
+  const myCourse = newest.find((item) => item.id === Number(id));
 
   const handleDetails = () => {
     setOpenDetails(!openDetails);
@@ -26,7 +32,7 @@ const Course = () => {
     <div>
       <Header />
       {/* register fixed */}
-      <div class="block sm:hidden z-20 bg-white flex justify-center p-4 fixed bottom-0 left-0 right-0">
+      <div class="sm:hidden z-20 bg-white flex justify-center p-4 fixed bottom-0 left-0 right-0">
         <button
           class="flex-1 bg-blue-500 rounded-xl text-white font-bold py-[10px] shadow-[0_6px_15px_-8px_rgba(82,122,255,1)]"
           type="button"
@@ -41,7 +47,7 @@ const Course = () => {
           <div className="col-span-1 lg:col-span-7 xl:col-span-6">
             <div>
               <h1 className="text-gray-900 font-extraBlack text-2xl mb-2">
-                دوره متخصص Next.js
+                {myCourse.name}
               </h1>
 
               <p className="text-gray-400 text-sm md:text-base leading-7 font-bold md:leading-8 mb-7">
@@ -129,15 +135,17 @@ const Course = () => {
                       stroke="currentColor"
                       fill="currentColor"
                       stroke-width="0"
-                      viewBox="0 0 16 16"
-                      className="text-white z-10 h-6 w-6"
+                      viewBox="0 0 20 20"
+                      class="text-white z-10 h-7 w-7"
                       height="1em"
                       width="1em"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"></path>
-                      <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"></path>
-                      <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"></path>
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      ></path>
                     </svg>
                   </div>
                   <span className="text-secondary-700 font-bold">
@@ -196,6 +204,7 @@ const Course = () => {
                   </span>
                 </div>
               </div>
+
               <div className="flex items-center justify-between lg:flex-col lg:items-end gap-y-4">
                 <button className="flex items-center gap-x-1 text-gray-500 hover:text-rose-500">
                   <BsHeart className="text-lg" />
@@ -479,7 +488,6 @@ const Course = () => {
         </div>
       </div>
 
-      <div className="w-3 h-[500px]"></div>
       <Footer />
     </div>
   );

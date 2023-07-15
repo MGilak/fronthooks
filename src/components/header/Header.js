@@ -304,11 +304,9 @@ const Header = () => {
 
             {/* Profile Button */}
             <div
-              ref={subProfileRef}
-              onClick={() => setShowProfile(!showProfile)}
               className={`left flex relative gap-x-4 justify-between transition-all duration-300 ease-linear `}
             >
-              <a href="##">
+              <Link to="/cart">
                 <button className="border border-gray-200 rounded-2xl p-2 transition-all ease-in hover:bg-gray-200 cursor-pointer">
                   <span className="">
                     <svg
@@ -333,9 +331,13 @@ const Header = () => {
                     </span>
                   </span>
                 </button>
-              </a>
+              </Link>
 
-              <button className="flex items-center border border-gray-200 rounded-2xl transition-all ease-in hover:bg-gray-200">
+              <button
+                ref={subProfileRef}
+                onClick={() => setShowProfile(!showProfile)}
+                className="flex items-center border border-gray-200 rounded-2xl transition-all ease-in hover:bg-gray-200"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

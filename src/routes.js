@@ -5,7 +5,7 @@ import Profile from "./pages/profile/Profile";
 import Payments from "./pages/payments/Payments";
 import MyCourses from "./pages/myCourses/MyCourses";
 import Cart from "./pages/cart/Cart";
-import Course from './pages/course/Course';
+import Course from "./pages/course/Course";
 
 const routes = [
   { path: "/", element: <MainPage /> },
@@ -15,7 +15,7 @@ const routes = [
   { path: "/profile/payments", element: <Payments /> },
   { path: "/profile/courses", element: <MyCourses /> },
   { path: "/cart", element: <Cart /> },
-  { path: "/courses/nextjs", element: <Course /> },
+  { path: "/courses/:id", element: <Course /> },
 ];
 
 export default routes;
