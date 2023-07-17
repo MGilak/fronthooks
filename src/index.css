@@ -92,7 +92,7 @@
   --tw-aspect-h: 9;
 }
 .shhadow_center_blue {
-  filter: drop-shadow(rgba(122, 142, 245, 0.6) 0px 10px 20px);
+  filter: drop-shadow(#7a8ef599 0px 10px 20px);
 }
 
 body {

@@ -60,7 +60,7 @@ const Course = () => {
             <div className="flex flex-col gap-y-7 mb-8 lg:justify-between lg:flex-row">
               <div className="flex justify-between lg:justify-start lg:gap-x-20 items-center">
                 <div className="flex flex-col items-center gap-y-3">
-                  <div className=" shhadow_center_blue p-4 lg:p-[17px] relative flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16">
+                  <div className="shhadow_center_blue p-4 lg:p-[17px] relative flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16">
                     <svg
                       viewBox="0 0 74 74"
                       fill="none"

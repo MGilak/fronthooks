@@ -3,11 +3,38 @@ import Header from "./../../components/header/Header";
 import Footer from "./../../components/footer/Footer";
 import { BsChevronDown } from "react-icons/bs";
 import SingleSlide from "./../../components/slider/SingleSlide";
-import { newest } from "./../../data";
+import { allCourses } from "./../../data";
 import { PiSlidersBold, PiSortAscendingBold } from "react-icons/pi";
 import { IoIosClose, IoIosArrowDown } from "react-icons/io";
 
 const Courses = () => {
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [courses, setCourses] = useState(allCourses);
+  const [itemName, setItemName] = useState();
+
+  const handleFilterChange = (event) => {
+    setItemName(event.target.name);
+    
+    if (event.target.checked) {
+      setCheckedItems([...checkedItems, event.target.name]);
+    } else {
+      setCheckedItems(
+        checkedItems.filter((item) => item !== event.target.name)
+      );
+    }
+  };
+  useEffect(() => {
+    const filteredCourses = allCourses.filter((course) => {
+      return checkedItems.includes(course[checkedItems.slice(-1)[0]]);
+    });
+
+    if (checkedItems.length === 0) {
+      setCourses(allCourses);
+    } else {
+      setCourses(filteredCourses);
+    }
+  }, [itemName, checkedItems]);
+
   const [type, setType] = useState(false);
   const [category, setCategory] = useState(false);
   const [sort, setSort] = useState(false);
@@ -79,7 +106,7 @@ const Courses = () => {
               className="flex py-2 justify-center items-center border border-gray-300 rounded-xl flex-1"
             >
               <PiSortAscendingBold className="text-lg" />
-              <span className="text-secondary-800 opacity-80 font-bold mr-2">
+              <span className="text-gray-800 opacity-80 font-bold mr-2">
                 مرتب سازی
               </span>
             </button>
@@ -145,7 +172,9 @@ const Courses = () => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value=""
+                      // checked={filters.isHolding}
+                      name="isHolding"
+                      onChange={handleFilterChange}
                       class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-200 border-none rounded-[5px] focus:ring-blue-500 dark:focus:ring-blue-600 "
                     />
                     <label for="default-checkbox" class="ml-2 text-gray-500">
@@ -156,7 +185,8 @@ const Courses = () => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value=""
+                      name="isComplete"
+                      onChange={handleFilterChange}
                       class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-200 border-none rounded-[5px] focus:ring-blue-500 dark:focus:ring-blue-600 "
                     />
                     <label for="default-checkbox" class="ml-2 text-gray-500">
@@ -167,7 +197,8 @@ const Courses = () => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value=""
+                      name="isDiscount"
+                      onChange={handleFilterChange}
                       class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-200 border-none rounded-[5px] focus:ring-blue-500 dark:focus:ring-blue-600 "
                     />
                     <label for="default-checkbox" class="ml-2 text-gray-500">
@@ -178,7 +209,8 @@ const Courses = () => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value=""
+                      name="isFree"
+                      onChange={handleFilterChange}
                       class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-200 border-none rounded-[5px] focus:ring-blue-500 dark:focus:ring-blue-600 "
                     />
                     <label for="default-checkbox" class="ml-2 text-gray-500">
@@ -189,7 +221,8 @@ const Courses = () => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value=""
+                      name="isCash"
+                      onChange={handleFilterChange}
                       class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-200 border-none rounded-[5px] focus:ring-blue-500 dark:focus:ring-blue-600 "
                     />
                     <label for="default-checkbox" class="ml-2 text-gray-500">
@@ -325,24 +358,38 @@ const Courses = () => {
                 <div className="p-4">
                   <div className="flex gap-2 items-center mb-2">
                     <input
+                      id="popularSort"
                       type="radio"
+                      name="sort"
                       className="cursor-pointer border-none bg-gray-200"
                     />
-                    <label htmlFor="">محبوب‌ترین</label>
+                    <label className="cursor-pointer" htmlFor="popularSort">
+                      محبوب‌ترین
+                    </label>
                   </div>
+
                   <div className="flex gap-2 items-center mb-2">
                     <input
+                      id="latestSort"
                       type="radio"
+                      name="sort"
                       className="cursor-pointer border-none bg-gray-200"
                     />
-                    <label htmlFor="">جدیدترین</label>
+                    <label className="cursor-pointer" htmlFor="latestSort">
+                      جدیدترین
+                    </label>
                   </div>
+
                   <div className="flex gap-2 items-center mb-2">
                     <input
+                      id="earliestSort"
                       type="radio"
+                      name="sort"
                       className="cursor-pointer border-none bg-gray-200"
                     />
-                    <label htmlFor="">قدیمی‌ترین</label>
+                    <label className="cursor-pointer" htmlFor="earliestSort">
+                      قدیمی‌ترین
+                    </label>
                   </div>
                 </div>
               </div>
@@ -352,7 +399,7 @@ const Courses = () => {
           {/* courses */}
           <div className="col-span-12 lg:col-span-8 xl:col-span-9 order-1 lg:order-2">
             <div className="grid grid-cols-12 gap-y-4 sm:gap-x-4 lg:gap-x-1 lg:gap-y-2 -m-3 mb-10 lg:mb-0">
-              {newest.map((course) => (
+              {courses.map((course) => (
                 <div
                   className="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-4 p-3"
                   key={course.id}
