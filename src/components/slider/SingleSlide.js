@@ -6,7 +6,7 @@ import { useCart, useCartActions } from "./../../context/CartProvider";
 import { useNavigate } from "react-router-dom";
 
 const SingleSlide = ({ course, changeStyle }) => {
-  const [bottonText, setBottonText] = useState("ثبت‌نام");
+  const [bottonText, setBottonText] = useState("ثبت‌نام دوره");
 
   const dispatch = useCartActions();
   const { cart } = useCart();
@@ -183,7 +183,7 @@ const SingleSlide = ({ course, changeStyle }) => {
           <div>
             <button
               onClick={addToCart}
-              className="rounded-2xl py-3 px-6 bg-blue-600 hover:bg-blue-500 transition-all duration-200 ease-in text-white"
+              className="rounded-2xl text-[15px] font-bold py-[11px] px-6 bg-blue-600 hover:bg-blue-500 transition-all duration-200 ease-in text-white"
             >
               {bottonText}
             </button>
