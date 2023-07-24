@@ -94,6 +94,42 @@
 .shhadow_center_blue {
   filter: drop-shadow(#7a8ef599 0px 10px 20px);
 }
+.course-comments__answer:before {
+  content: "";
+  display: block;
+  height: 62%;
+  position: absolute;
+  right: 17px;
+  top: -13px;
+  width: 3px;
+  background-color: #efefef;
+  z-index: 10;
+}
+.answer-item:before {
+  content: "";
+  display: block;
+  height: 3px;
+  position: relative;
+  right: -31px;
+  top: 57px;
+  width: 15px;
+  background-color: #efefef;
+  z-index: 10;
+}
+@media only screen and (max-width: 1023px) {
+  .course-comments__answer:before {
+    height: 66%;
+  }
+}
+@media only screen and (max-width: 639px) {
+  .answer-item:before {
+    display: none;
+  }
+  .course-comments__answer:before {
+    height: 12%;
+    right: 21px;
+  }
+}
 
 body {
   font-family: Vazirmatn;

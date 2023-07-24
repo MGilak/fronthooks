@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Header from "./../../components/header/Header";
 import Footer from "./../../components/footer/Footer";
 import { BsHeart } from "react-icons/bs";
-import { FaStar, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaStar, FaEye, FaEyeSlash, FaAngleDown } from "react-icons/fa";
 import Session from "./../../components/sessions/Session";
 import { useParams } from "react-router-dom";
 import { newest } from "./../../data";
@@ -10,9 +10,16 @@ import { newest } from "./../../data";
 const Course = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const [openSessions, setOpenSessions] = useState(false);
+  const [categoryQus, setCategoryQus] = useState(false);
+  const [category, setCategory] = useState("");
+  const [inputBG, setInputBG] = useState(false);
+  const [showQus, setShowQus] = useState(false);
 
   const toUpDetailRef = useRef();
   const toUpSessionRef = useRef();
+  const inpurRef = useRef();
+  const questionsRef = useRef();
+  const qusBoxRef = useRef();
 
   const { id } = useParams();
 
@@ -28,6 +35,32 @@ const Course = () => {
     toUpSessionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (inpurRef.current && !inpurRef.current.contains(event.target)) {
+        setInputBG(false);
+        // setCategoryQus(false);
+      }
+
+      if (
+        questionsRef.current &&
+        !questionsRef.current.contains(event.target)
+      ) {
+        setCategoryQus(false);
+      }
+
+      if (qusBoxRef.current && !qusBoxRef.current.contains(event.target)) {
+        setShowQus(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [inpurRef, questionsRef]);
+
   return (
     <div>
       <Header />
@@ -42,6 +75,7 @@ const Course = () => {
       </div>
 
       <div className="container mx-auto mt-10 xl:max-w-screen-xl">
+        {/* title */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-x-14 bg-white rounded-2xl p-3 py-6 lg:p-5 mb-10">
           {/* right */}
           <div className="col-span-1 lg:col-span-7 xl:col-span-6">
@@ -51,9 +85,7 @@ const Course = () => {
               </h1>
 
               <p className="text-gray-400 text-sm md:text-base leading-7 font-bold md:leading-8 mb-7">
-                آموزش پروژه محور نکست (Next.js) به همراه نکست 13 در قالب پروژه
-                های متنوع ارائه شده است. هدف ما درک عملکرد نکست در پروژه پیچیده
-                دوره است.
+                {myCourse.desc}
               </p>
             </div>
 
@@ -100,9 +132,7 @@ const Course = () => {
                       <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"></path>
                     </svg>
                   </div>
-                  <span className="text-secondary-700 font-bold">
-                    ۴۴:۱۱:۰۰{" "}
-                  </span>
+                  <span className="text-gray-700 font-bold">۴۴:۱۱:۰۰ </span>
                 </div>
 
                 <div className="flex flex-col items-center gap-y-3">
@@ -326,7 +356,7 @@ const Course = () => {
             <div className="relative">
               <video
                 controls
-                poster="/images/courses/nextjs.svg"
+                poster={myCourse.img}
                 className="object-cover rounded-xl h-[54%] sm:h-[330px] md:h-[400px] lg:h-[200px] xl:h-[321px] w-[745px] lg:w-[700px]"
               >
                 <source src="/videos/nextjs.mp4" type="video/mp4" />
@@ -481,10 +511,371 @@ const Course = () => {
                 </button>
               </div>
             </div>
+
+            <div>
+              <div className="bg-white rounded-xl py-6 px-3 lg:px-6">
+                <div className="flex flex-col items-center lg:flex-row justify-between gap-y-3 mb-8">
+                  <h2 class="text-[23px] font-bold text-blue-600">
+                    پرسش‌های شما
+                  </h2>
+
+                  <button
+                    onClick={() => setShowQus(true)}
+                    class="ring-2 hover:bg-blue-50/30 ring-blue-400 hover:ring-blue-600 transition-all duration-150 text-blue-600 px-6 py-2 rounded-xl flex items-center text-sm font-bold w-full lg:w-auto"
+                  >
+                    <svg
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      class="w-4 h-4 ml-1"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                    <span>ثبت پرسش جدید</span>
+                  </button>
+                </div>
+
+                {/* comments */}
+                <div className="space-y-8">
+                  <div>
+                    {/* header */}
+                    <div className="border z-20 border-gray-200 rounded-xl p-2 sm:p-4 mb-3">
+                      <div className="flex items-center justify-between mb-5 border-b border-b-gray-200/60 pb-2">
+                        <div class="flex items-center">
+                          <div class="border-2 ml-2 bg-gray-400/70 text-2xl pb-1 shrink-0 rounded-[50%] text-white w-10 h-10 flex items-center justify-center">
+                            ه
+                          </div>
+                          <div class="text-sm w-full text-gray-600">
+                            <span class="font-bold block mb-1">
+                              هادی بابایی
+                            </span>
+                            <span class="block text-secondary-500 text-xs">
+                              ۳ هفته پیش
+                            </span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <button class="flex items-center hover:bg-gray-100 transition-all duration-150 bg-gray-200 text-[14px] px-2 py-[5px] rounded-lg text-gray-600 bg-secondary-100/50">
+                            <span class="ml-1">
+                              <svg
+                                stroke="currentColor"
+                                fill="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 20 20"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                  clip-rule="evenodd"
+                                ></path>
+                              </svg>
+                            </span>
+                            <span>پاسخ</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <p class="text-gray-600 leading-loose lg:leading-8 text-xs lg:text-base">
+                        سلام و خسته نباشید استاد من دوره طراحی ریسپانسیو شما رو
+                        گرفتم و فکر کردم لایسنس رو هم رو سیستم هم موبایل میشه زد
+                        چون من هر دوره ای خریدم اینطوری بود، من الان لایسنس رو
+                        در اسپات پلیر گوشی زدم ولی دیگ وقتی رو سیستم میزنم میگ
+                        دفعات زیادی زدی!! اخ من میخاستم رو هر دو پلتفرم باشه{" "}
+                      </p>
+                    </div>
+
+                    {/* body */}
+                    <div className="relative">
+                      <div className="course-comments__answer mr-2 sm:mr-8 space-y-3">
+                        <div className="relative">
+                          <div className="answer-item border border-gray-100 bg-gray-50/80 rounded-xl p-2 sm:p-4 last-item">
+                            <div className="flex items-center justify-between mb-5 border-b border-b-gray-200/60 pb-2">
+                              <div className="flex items-center ">
+                                <div className="rounded-[50%] shrink-0 border-2 ml-2">
+                                  <img
+                                    alt="صاحب محمدی"
+                                    src="/images/saheb.webp"
+                                    class="w-10 h-10 rounded-[50%] object-cover"
+                                  />
+                                </div>
+
+                                <div class="text-sm w-full text-gray-600">
+                                  <span class="font-bold block mb-1">
+                                    صاحب محمدی
+                                  </span>
+                                  <span class="block text-gray-500 text-xs">
+                                    ۳ هفته پیش
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <p class="text-secondary-700 leading-loose lg:leading-8 text-xs lg:text-base">
+                              سلام وقت بخیر به پشتیبانی تلگرام پیام بدین لطفا.{" "}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* side */}
-          <div className="col-span-12 md:col-span-4 lg:col-span-3 order-1 lg:order-2 space-y-4"></div>
+          <div className="col-span-12 md:col-span-4 lg:col-span-3 order-1 lg:order-2 space-y-4">
+            <div class="rounded-xl p-3 lg:p-5 bg-white">
+              <div class="flex md:flex-col md:gap-y-1 items-center justify-between mb-3">
+                <div class="font-bold  flex-1 flex items-center justify-center">
+                  <span class="text-3xl text-gray-800 font-bold ml-2 lg:text-4xl">
+                    ۲,۵۸۹,۰۰۰
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    data-name="Layer 2"
+                    viewBox="0 0 51.29 27.19"
+                    width="51"
+                    height="27"
+                    class="text-gray-200 opacity-50 w-5 h-5 lg:w-6 lg:h-6"
+                  >
+                    <path
+                      d="M36.48 22.85c1.78-.83 2.93-1.81 3.45-2.94h-1.65c-2.53 0-4.69-.66-6.47-1.97-.59.68-1.23 1.2-1.93 1.55s-1.54.53-2.5.53c-1.03 0-1.87-.18-2.51-.53-.65-.35-1.14-.96-1.5-1.83-.35-.87-.56-2.08-.63-3.62-.02-.28-.04-.6-.04-.97s-.01-.72-.04-1.07c-.14-3.42-.28-6.26-.42-8.51l-5.8 1.37c.73 1.64 1.34 3.34 1.83 5.08.49 1.75.74 3.58.74 5.5 0 1.6-.37 3.12-1.11 4.57-.74 1.46-1.85 2.64-3.32 3.57-1.48.93-3.27 1.39-5.38 1.39s-3.82-.45-5.21-1.34C2.61 22.74 1.6 21.6.96 20.22c-.63-1.38-.95-2.84-.95-4.36 0-1.2.13-2.28.4-3.25.27-.97.63-1.93 1.07-2.87l2.39 1.34c-.38.92-.65 1.71-.83 2.39-.18.68-.26 1.48-.26 2.39 0 1.76.49 3.19 1.48 4.29s2.63 1.65 4.92 1.65c1.55 0 2.87-.32 3.96-.95 1.09-.63 1.9-1.44 2.43-2.43.53-.98.79-1.98.79-2.99 0-2.65-.82-5.82-2.46-9.5l1.69-3.52L22.38.79c.16-.05.39-.07.67-.07.54 0 .98.19 1.32.56s.53.88.58 1.51c.14 2.04.27 5.02.39 8.94.02.38.04.75.04 1.13s.01.71.04 1.02c.05 1.03.22 1.78.53 2.25s.81.7 1.51.7c.84 0 1.52-.18 2.04-.53.52-.35.97-1 1.37-1.93.75-1.71 1.33-2.96 1.74-3.75.41-.79.94-1.46 1.58-2.04.64-.57 1.44-.86 2.37-.86 1.83 0 3.27.94 4.31 2.83s1.69 4.06 1.95 6.53c1.57-.02 2.77-.13 3.61-.33.83-.2 1.41-.49 1.72-.88.32-.39.47-.89.47-1.5 0-.75-.16-1.67-.49-2.76-.33-1.09-.69-2.1-1.09-3.04l2.43-1.23c1.22 3.1 1.83 5.44 1.83 7.04 0 1.83-.67 3.18-2 4.04-1.34.87-3.53 1.34-6.58 1.41-.49 2.21-1.8 3.93-3.92 5.19-2.12 1.25-4.68 1.98-7.69 2.16l-1.2-2.88c2.6-.14 4.8-.63 6.58-1.46ZM10.38 5.66l.11 3.31-3.2.28-.46-3.31 3.55-.28Zm25.1 10.83c.88.28 1.81.42 2.8.42h1.93c-.16-1.67-.55-3.08-1.16-4.26-.61-1.17-1.38-1.76-2.32-1.76-.75 0-1.42.45-2.02 1.34-.6.89-1.11 1.92-1.53 3.1.66.49 1.42.88 2.3 1.16ZM43.64.21C45.06.07 46.43 0 47.74 0c.96 0 1.67.02 2.11.07l-.21 2.81c-.42-.05-1.08-.07-1.97-.07-1.2 0-2.44.07-3.73.21s-2.44.32-3.45.53L39.86.81c1.1-.26 2.36-.46 3.78-.6Z"
+                      data-name="Layer 1"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <button class="w-full py-3 rounded-xl text-lg hover:bg-blue-500/90 transition-all duration-200 bg-blue-500 text-white font-bold">
+                  ثبت‌نام دوره
+                </button>
+              </div>
+            </div>
+
+            <div class="rounded-xl p-3 lg:p-5 bg-white sticky top-20 z-10 shadow-xl">
+              <ul class="flex items-center justify-between text-sm text-gray-300">
+                <li class="flex items-center">
+                  <span class="w-1 h-1 rounded-full bg-blue-500 block ml-1 block"></span>
+                  <button class="hover:text-gray-600 transition-all duration-200 ease-in text-blue-500 font-bold">
+                    توضیحات
+                  </button>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-1 h-1 rounded-full bg-blue-500 block ml-1 hidden"></span>
+                  <button class="hover:text-gray-600 transition-all duration-200 ease-in ">
+                    جلسات
+                  </button>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-1 h-1 rounded-full bg-blue-500 block ml-1 hidden"></span>
+                  <button class="hover:text-gray-600 transition-all duration-200 ease-in ">
+                    دیدگاه و پرسش
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl p-3 lg:p-5 bg-white">
+              <div className="flex flex-col items-center">
+                <div class="w-16 h-16 relative overflow-hidden ring ring-gray-200 rounded-full mb-2">
+                  <img
+                    src="/images/saheb.webp"
+                    alt="صاحب محمدی"
+                    class="rounded-full hover:scale-110 w-full h-full absolute transition-all duraton-200 ease-in"
+                  />
+                </div>
+
+                <div class="text-center mb-2">
+                  <p class="font-black text-gray-700/90 leading-tight">
+                    صاحب محمدی
+                  </p>
+                  <span class="text-sm text-gray-500 block -mt-0.5">
+                    مدرس دوره
+                  </span>
+                </div>
+
+                <p class="justify-center leading-6 text-sm text-gray-600">
+                  داستان برنامه نویس شدن من برمیگرده به سال 93. همون موقع که
+                  برای پروژه های دانشگاه (رشته مهندسی نفت) برنامه نویسی میکردم.
+                  کم کم با MATLAB آشنا شدم و بعدا وارد حوزه برنامه نویسی وب شدم
+                  و الان حدود 7 ساله که شغل تخصصی من برنامه نویسی وب هست.
+                  <strong> علاقه من جاوااسکریپت و خاندانش است. </strong>به همین
+                  دلیل فرانت هوکس رو بنا کردم تا تجربه چند ساله رو در قالب دوره
+                  های پروژه محور به علاقه مندان این حوزه انتقال بدم ☘️🤍.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-xl p-3 lg:p-5 bg-white">
+              <p class="text-gray-600 text-xs mb-4">
+                میتوانید دیدگاه خود را ثبت کنید
+              </p>
+
+              <button class="ring ring-blue-300 hover:ring-blue-500 hover:bg-blue-100/30 px-6 py-3 rounded-xl flex items-center justify-center text-blue-500 transition-all duration-200 text-sm font-bold w-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="w-5 h-5 ml-1"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="1.5"
+                    d="M8.696 9.058h6.032m-6.032 3.456h3.839m.576 6.413h1.061c2.887 0 5.398-2.077 6.076-5.025a9.955 9.955 0 0 0 0-4.455l-.09-.386c-.652-2.841-2.781-5.049-5.494-5.698l-.381-.092a9.853 9.853 0 0 0-4.593 0l-.224.054c-2.81.672-5.014 2.959-5.69 5.901-.37 1.61-.367 3.303.003 4.912.687 2.989 2.708 5.476 5.419 6.635l.118.05c1.173.502 2.517-.102 2.998-1.333a.866.866 0 0 1 .797-.563Z"
+                  ></path>
+                </svg>
+                <span>ثبت دیدگاه</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* question */}
+      <div
+        className={`${
+          showQus ? "flex" : "hidden"
+        } z-50 justify-center items-center fixed w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.4)] top-0 left-0 bottom-0 right-0 text-gray-700`}
+      >
+        <div
+          ref={qusBoxRef}
+          className="bg-white w-[600px] min-h-[500px] py-4 px-6 rounded-lg"
+        >
+          <h2 class="">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+              <div>
+                <p class="text-gray-800 text-sm lg:text-base">پرسش جدید</p>
+                <p class="text-gray-400 text-sm lg:text-base">
+                  پرسش خود را وارد کنید
+                </p>
+              </div>
+
+              <button onClick={() => setShowQus(false)}>
+                <svg
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  class="text-gray-400"
+                  height="20"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </h2>
+
+          <div className="flex justify-center mt-6">
+            <div className="max-w-md bg-white w-full">
+              <form>
+                <div>
+                  <label class="flex items-center text-gray-600 text-sm mb-2">
+                    <span>دسته‌بندی پرسش</span>
+                    <span class="text-red-500 translate-y-[5px] mr-[2px] text-[16px]">
+                      *
+                    </span>
+                  </label>
+
+                  <div
+                    ref={questionsRef}
+                    onClick={() => {
+                      setCategoryQus(!categoryQus);
+                      setInputBG(true);
+                    }}
+                    className={`${
+                      inputBG &&
+                      "bg-white ring-[1px] ring-blue-300 shadow-[0_15px_42px_-15px_rgba(23,23,233,0.6)]"
+                    } transition-all duration-100 box-border bg-gray-100 hover:ring-[1px] hover:ring-gray-200 rounded-xl h-12 flex items-center justify-between relative`}
+                  >
+                    <input
+                      ref={inpurRef}
+                      className="placeholder-gray-400 focus:ring-0 border-none text-sm focus:border-none outline-none focus:outline-none bg-transparent"
+                      type="text"
+                      placeholder="انتخاب دسته‌بندی پرسش"
+                      value={category}
+                    />
+
+                    <div className="ml-3 flex items-center">
+                      <div className="w-[1px] h-5 bg-gray-300 ml-3"></div>
+                      <FaAngleDown
+                        className={`${
+                          inputBG && "text-gray-700"
+                        } text-gray-300 text-lg transition-all duration-150 hover:text-gray-400`}
+                      />
+                    </div>
+
+                    <div
+                      className={`${
+                        categoryQus ? "block" : "hidden"
+                      } bg-white absolute top-14 shadow-md rounded-xl w-full py-2 px-1 z-30`}
+                    >
+                      <div
+                        onClick={() => setCategory("پشتیبانی")}
+                        className="px-3 py-2 hover:bg-gray-100 rounded-lg mb-1"
+                      >
+                        پشتیبانی
+                      </div>
+                      <div
+                        onClick={() => setCategory("دسترسی به دوره")}
+                        className="px-3 py-2 hover:bg-gray-100 rounded-lg mb-1"
+                      >
+                        دسترسی به دوره
+                      </div>
+                      <div
+                        onClick={() => setCategory("سرفصل‌های دوره")}
+                        className="px-3 py-2 hover:bg-gray-100 rounded-lg mb-1"
+                      >
+                        سرفصل‌های دوره
+                      </div>
+                      <div
+                        onClick={() => setCategory("مربی دوره")}
+                        className="px-3 py-2 hover:bg-gray-100 rounded-lg"
+                      >
+                        مربی دوره
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <label class="flex items-center text-gray-600 text-sm mb-2">
+                    <span>متن پرسش</span>
+                    <span class="z-10 text-red-500 translate-y-[5px] mr-[2px] text-[16px]">
+                      *
+                    </span>
+                  </label>
+
+                  <textarea class="focus:shadow-[0_15px_30px_-11px_rgba(23,23,233,0.4)] focus:bg-white focus:ring-blue-300 transition-all duration-100 hover:ring-[1px] hover:ring-blue-300 w-full border-none bg-gray-100 rounded-xl mt-2 min-h-[150px] leading-8 text-right text-[17px]"></textarea>
+                </div>
+
+                <div class="mt-8">
+                  <button class="bg-blue-500 hover:bg-blue-500/90 transition-all duration-150 text-white py-3 px-4 rounded-xl w-full">
+                    ثبت پرسش
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
 
