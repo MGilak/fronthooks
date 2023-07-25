@@ -15,7 +15,8 @@ const Course = () => {
   const [inputBG, setInputBG] = useState(false);
   const [showQus, setShowQus] = useState(false);
   const [activeIndex, setActiveIndex] = useState(1);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState([]);
+  const [textareaValue, setTextareaValue] = useState("");
 
   const toUpDetailRef = useRef();
   const toUpSessionRef = useRef();
@@ -23,6 +24,7 @@ const Course = () => {
   const questionsRef = useRef();
   const qusBoxRef = useRef();
   const questionRef = useRef();
+  const submitQRef = useRef();
 
   const { id } = useParams();
 
@@ -83,13 +85,17 @@ const Course = () => {
   }, [inpurRef, questionsRef]);
 
   useEffect(() => {
-    setQuestion();
-  }, []);
+    const button = submitQRef.current;
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
 
-  const handleTextareaChange = (event) => {
-    setQuestion(event.target.value);
-  };
+      setQuestion([...question, textareaValue]);
+      setShowQus(false);
+      setTextareaValue("");
+    });
+  }, [question, textareaValue]);
 
+  console.log(question);
   return (
     <div>
       <Header />
@@ -662,7 +668,50 @@ const Course = () => {
                     </div>
                   </div>
 
-                  {}
+                  {question.map((item) => (
+                    <div className="border z-20 border-gray-200 rounded-xl p-2 sm:p-4 mb-3">
+                      <div className="flex items-center justify-between mb-5 border-b border-b-gray-200/60 pb-2">
+                        <div class="flex items-center">
+                          <div class="border-2 ml-2 bg-gray-400/70 text-2xl pb-1 shrink-0 rounded-[50%] text-white w-10 h-10 flex items-center justify-center">
+                            م
+                          </div>
+                          <div class="text-sm w-full text-gray-600">
+                            <span class="font-bold block mb-1">محمود گیلک</span>
+                            <span class="block text-secondary-500 text-xs">
+                              الان
+                            </span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <button class="flex items-center hover:bg-gray-100 transition-all duration-150 bg-gray-200 text-[14px] px-2 py-[5px] rounded-lg text-gray-600 bg-secondary-100/50">
+                            <span class="ml-1">
+                              <svg
+                                stroke="currentColor"
+                                fill="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 20 20"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                  clip-rule="evenodd"
+                                ></path>
+                              </svg>
+                            </span>
+                            <span>پاسخ</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <p class="text-gray-600 leading-loose lg:leading-8 text-xs lg:text-base">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -925,14 +974,18 @@ const Course = () => {
                   </label>
 
                   <textarea
-                    value={question}
-                    onChange={handleTextareaChange}
+                    value={textareaValue}
+                    onChange={(e) => setTextareaValue(e.target.value)}
                     class="focus:shadow-[0_15px_30px_-11px_rgba(23,23,233,0.4)] focus:bg-white focus:ring-blue-300 transition-all duration-100 hover:ring-[1px] hover:ring-blue-300 w-full border-none bg-gray-100 rounded-xl mt-2 min-h-[150px] leading-8 text-right text-[17px]"
                   ></textarea>
                 </div>
 
                 <div class="mt-8">
-                  <button class="bg-blue-500 hover:bg-blue-500/90 transition-all duration-150 text-white py-3 px-4 rounded-xl w-full">
+                  <button
+                    ref={submitQRef}
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-500/90 transition-all duration-150 text-white py-3 px-4 rounded-xl w-full"
+                  >
                     ثبت پرسش
                   </button>
                 </div>
