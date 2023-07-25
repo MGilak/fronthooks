@@ -14,12 +14,15 @@ const Course = () => {
   const [category, setCategory] = useState("");
   const [inputBG, setInputBG] = useState(false);
   const [showQus, setShowQus] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(1);
+  const [question, setQuestion] = useState("");
 
   const toUpDetailRef = useRef();
   const toUpSessionRef = useRef();
   const inpurRef = useRef();
   const questionsRef = useRef();
   const qusBoxRef = useRef();
+  const questionRef = useRef();
 
   const { id } = useParams();
 
@@ -33,6 +36,24 @@ const Course = () => {
   const handleSession = () => {
     setOpenSessions(!openSessions);
     toUpSessionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const goTo = (place, index) => {
+    setActiveIndex(index);
+    switch (place) {
+      case "desc":
+        toUpDetailRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "session":
+        toUpSessionRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "questions":
+        questionRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -60,6 +81,14 @@ const Course = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [inpurRef, questionsRef]);
+
+  useEffect(() => {
+    setQuestion();
+  }, []);
+
+  const handleTextareaChange = (event) => {
+    setQuestion(event.target.value);
+  };
 
   return (
     <div>
@@ -346,7 +375,9 @@ const Course = () => {
                 >
                   <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5z"></path>
                 </svg>
-                <span className="font-bold">پشتیبانی: دائمی تلگرام</span>
+                <span ref={toUpDetailRef} className="font-bold">
+                  پشتیبانی: دائمی تلگرام
+                </span>
               </div>
             </div>
           </div>
@@ -367,7 +398,7 @@ const Course = () => {
 
         {/* body */}
         <div
-          ref={toUpDetailRef}
+          // ref={toUpDetailRef}
           className="grid grid-cols-12 gap-y-8 md:gap-x-8"
         >
           <div className="col-span-12 md:col-span-8 lg:col-span-9 order-2 md:order-1 space-y-8">
@@ -467,10 +498,7 @@ const Course = () => {
               </div>
             </div>
 
-            <div
-              ref={toUpSessionRef}
-              className="relative rounded-xl overflow-hidden"
-            >
+            <div className="relative rounded-xl overflow-hidden">
               <div
                 className={`transition-all duration-200 ${
                   openSessions ? "max-h-[2000px]" : "max-h-[400px]"
@@ -479,19 +507,21 @@ const Course = () => {
                 <h2 class="text-2xl font-extraBlack text-primary-900 mb-5">
                   جلسات دوره
                 </h2>
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
+                <div>
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                  <Session />
+                </div>
               </div>
 
               <div
@@ -512,7 +542,7 @@ const Course = () => {
               </div>
             </div>
 
-            <div>
+            <div ref={questionRef}>
               <div className="bg-white rounded-xl py-6 px-3 lg:px-6">
                 <div className="flex flex-col items-center lg:flex-row justify-between gap-y-3 mb-8">
                   <h2 class="text-[23px] font-bold text-blue-600">
@@ -631,6 +661,8 @@ const Course = () => {
                       </div>
                     </div>
                   </div>
+
+                  {}
                 </div>
               </div>
             </div>
@@ -669,21 +701,48 @@ const Course = () => {
             <div class="rounded-xl p-3 lg:p-5 bg-white sticky top-20 z-10 shadow-xl">
               <ul class="flex items-center justify-between text-sm text-gray-300">
                 <li class="flex items-center">
-                  <span class="w-1 h-1 rounded-full bg-blue-500 block ml-1 block"></span>
-                  <button class="hover:text-gray-600 transition-all duration-200 ease-in text-blue-500 font-bold">
+                  <span
+                    class={`w-1 h-1 rounded-full bg-blue-500 ml-1  ${
+                      activeIndex === 1 ? "block" : "hidden"
+                    }`}
+                  ></span>
+                  <button
+                    onClick={() => goTo("desc", 1)}
+                    class={`hover:text-gray-600 transition-all duration-200 ease-in ${
+                      activeIndex === 1 && "text-blue-500"
+                    }  font-bold`}
+                  >
                     توضیحات
                   </button>
                 </li>
                 <li class="flex items-center">
-                  <span class="w-1 h-1 rounded-full bg-blue-500 block ml-1 hidden"></span>
-                  <button class="hover:text-gray-600 transition-all duration-200 ease-in ">
+                  <span
+                    class={`w-1 h-1 rounded-full bg-blue-500 ml-1  ${
+                      activeIndex === 2 ? "block" : "hidden"
+                    }`}
+                  ></span>
+                  <button
+                    onClick={() => goTo("session", 2)}
+                    class={`hover:text-gray-600 transition-all duration-200 ease-in ${
+                      activeIndex === 2 && "text-blue-500"
+                    }  font-bold`}
+                  >
                     جلسات
                   </button>
                 </li>
                 <li class="flex items-center">
-                  <span class="w-1 h-1 rounded-full bg-blue-500 block ml-1 hidden"></span>
-                  <button class="hover:text-gray-600 transition-all duration-200 ease-in ">
-                    دیدگاه و پرسش
+                  <span
+                    class={`w-1 h-1 rounded-full bg-blue-500 ml-1  ${
+                      activeIndex === 3 ? "block" : "hidden"
+                    }`}
+                  ></span>
+                  <button
+                    onClick={() => goTo("questions", 3)}
+                    class={`hover:text-gray-600 transition-all duration-200 ease-in ${
+                      activeIndex === 3 && "text-blue-500"
+                    }  font-bold`}
+                  >
+                    پرسش‌ها
                   </button>
                 </li>
               </ul>
@@ -699,7 +758,7 @@ const Course = () => {
                   />
                 </div>
 
-                <div class="text-center mb-2">
+                <div ref={toUpSessionRef} class="text-center mb-2">
                   <p class="font-black text-gray-700/90 leading-tight">
                     صاحب محمدی
                   </p>
@@ -865,7 +924,11 @@ const Course = () => {
                     </span>
                   </label>
 
-                  <textarea class="focus:shadow-[0_15px_30px_-11px_rgba(23,23,233,0.4)] focus:bg-white focus:ring-blue-300 transition-all duration-100 hover:ring-[1px] hover:ring-blue-300 w-full border-none bg-gray-100 rounded-xl mt-2 min-h-[150px] leading-8 text-right text-[17px]"></textarea>
+                  <textarea
+                    value={question}
+                    onChange={handleTextareaChange}
+                    class="focus:shadow-[0_15px_30px_-11px_rgba(23,23,233,0.4)] focus:bg-white focus:ring-blue-300 transition-all duration-100 hover:ring-[1px] hover:ring-blue-300 w-full border-none bg-gray-100 rounded-xl mt-2 min-h-[150px] leading-8 text-right text-[17px]"
+                  ></textarea>
                 </div>
 
                 <div class="mt-8">
