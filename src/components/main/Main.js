@@ -529,7 +529,7 @@ const Main = () => {
           <video
             className="max-w-full max-h-full"
             ref={videoRef}
-            src="./videos/آموزش تخصصی برنامه نویسی وب - فرانت اند - فرانت هوکس.mp4"
+            src="./videos/student.mp4"
             controls
           ></video>
         </div>
